@@ -1,48 +1,46 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [sample, setSample] = useState("");
+  const [pinned, setPinned] = useState(false);
+  const count = sample.length;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Welcome
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            This project is part of a 101-project portfolio showcasing modern web development.
-          </p>
+    <main className="tone-shell">
+      <header className="tone-header">
+        <Link href="/" className="tone-brand"><span className="tone-mark">T /</span> TONE LAB</Link>
+        <nav aria-label="Sentiment analyzer navigation"><Link href="/more-projects">More projects</Link><a href="https://github.com/bookchaowalit-ai/book-ai" target="_blank" rel="noreferrer">Source ↗</a></nav>
+      </header>
+
+      <section className="tone-hero">
+        <p className="tone-label">LANGUAGE / PROTOTYPE</p>
+        <h1>Read the temperature. Withhold the verdict.</h1>
+        <p className="tone-lede">A sentiment-analysis bench with the important part left visible: no model is connected, so no label, score, or confidence is being invented.</p>
+      </section>
+
+      <section className="tone-workbench" aria-labelledby="sample-title">
+        <div className="sample-bench">
+          <div className="bench-head"><div><p className="tone-label">01 / INPUT SAMPLE</p><h2 id="sample-title">Place a sentence on the bench.</h2></div><span className="local-badge">LOCAL ONLY</span></div>
+          <label htmlFor="sample-text">Text sample</label>
+          <textarea id="sample-text" value={sample} onChange={(event) => { setSample(event.target.value); setPinned(false); }} placeholder="Paste or type a sentence to inspect the interface state…" />
+          <div className="sample-controls"><span>{count.toString().padStart(3, "0")} characters · never sent</span><button type="button" onClick={() => setPinned(true)} disabled={!sample.trim()}>{pinned ? "Sample pinned" : "Pin sample"}</button></div>
+          <p className="bench-note" aria-live="polite">{pinned ? "Pinned locally for the next model contract." : "This field is a local design prototype; it has no inference action."}</p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              About This Project
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Built with Next.js 15, TypeScript, and Tailwind CSS.
-              Designed for performance, accessibility, and great user experience.
-            </p>
-          </div>
+        <aside className="result-bench" aria-live="polite">
+          <div className="bench-head"><div><p className="tone-label">02 / RESULT PANEL</p><h2>Inference withheld.</h2></div><span className="result-dot" aria-hidden="true" /></div>
+          <div className="result-state"><strong>NO<br />INFERENCE</strong><span>ENDPOINT ABSENT</span></div>
+          <div className="confidence-rule" aria-label="Confidence unavailable"><span /><span /><span /><span /><span /></div>
+          <dl className="result-facts"><div><dt>Label</dt><dd>WITHHELD</dd></div><div><dt>Confidence</dt><dd>WITHHELD</dd></div><div><dt>Model</dt><dd>NOT ON FILE</dd></div></dl>
+          <p className="result-note">A visual result is not a result. Connect an evaluation-backed model before turning the empty instrument on.</p>
+        </aside>
+      </section>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              Tech Stack
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">Next.js 15</span>
-              <span className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">TypeScript</span>
-              <span className="px-3 py-1 bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-200 rounded-full text-sm">Tailwind CSS</span>
-              <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Vercel</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center mt-12">
-          <Link href="https://github.com/bookchaowalit" className="text-blue-600 dark:text-blue-400 hover:underline">
-            View Source Code →
-          </Link>
-        </div>
-      </div>
-    </div>
+      <section className="tone-legend" aria-label="Prototype states"><span><i className="legend-amber" />Input stays local</span><span><i className="legend-red" />Inference is unavailable</span><span><i className="legend-line" />Confidence is not guessed</span></section>
+      <footer className="tone-footer"><span>bookchaowalit / AI domain</span><span>Calm interfaces for uncertain output</span><Link href="https://bookchaowalit.com">Portfolio ↗</Link></footer>
+    </main>
   );
 }
