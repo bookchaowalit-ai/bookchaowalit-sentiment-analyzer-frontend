@@ -34,3 +34,4 @@ Score: 6/10 (was 3/10) — the bench now produces a real, explainable reading in
   - "donʼt" (U+02BC) and "don‘t" were split into "don" + "t", losing the
     negation; all apostrophe-like marks are now removed before tokenizing.
   - Full-width letters ("ｇｏｏｄ") are NFKC-folded instead of dropped.
+- Security deps: `next` 16.1.6 -> 16.3.8 (and `eslint-config-next`) clears critical GHSA-2xp9-vwfh-vxw4 (Image Optimization RCE) plus bundled postcss/sharp highs; lockfile regenerated with same-major `npm audit fix`. `npm audit --omit=dev`: C1/H3/M1/L0 [nanoid:h,next:c,postcss:h,sharp:h] -> C0/H0/M0/L0.
