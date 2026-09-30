@@ -8,16 +8,16 @@ than alarming, because a sentiment label without a model is not evidence.
 
 ## First viewport
 
-The first screen puts the text sample bench beside a clearly withheld result.
-The visitor can type locally and pin a sample for review, but the interface says
-that nothing is sent and no inference is being claimed.
+The first screen puts the text sample bench beside the result panel. The visitor
+types locally and presses Analyze; the interface says that nothing is sent and
+that the reading comes from a word list, not a trained model.
 
 ## Palette and material
 
 - Walnut `#1b1815` is the lab ground.
 - Paper `#f2eadc` is the reading surface.
 - Safelight amber `#e5a85d` marks focus and activity.
-- Terracotta `#c8795f` marks withheld or unavailable inference.
+- Terracotta `#c8795f` marks the result state and heuristic caveats.
 - Fine rules and specimen marks reference a print lab, not a generic dashboard.
 
 ## Type
@@ -28,10 +28,11 @@ counts, endpoint state, and specimen labels.
 
 ## Interaction and states
 
-The textarea updates a local character count. Pinning records only the local
-sample state and changes the status line; it never calls a model. The result
-panel has explicit `NO INFERENCE`, `CONFIDENCE WITHHELD`, and `ENDPOINT ABSENT`
-states.
+The textarea updates a local character count. Analyze runs `lib/sentiment.ts`
+(lexicon + negation + intensifiers) in the browser. The result panel shows the
+label, raw and comparative score, and every contributing word with its weight;
+no confidence percentage is shown because the heuristic has none. Editing the
+text clears the stale result.
 
 ## Responsive rules
 

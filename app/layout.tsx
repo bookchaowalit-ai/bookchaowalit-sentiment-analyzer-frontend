@@ -8,14 +8,13 @@ const dmMono = DM_Mono({ variable: "--font-dm-mono", weight: ["400", "500"], sub
 
 export const metadata: Metadata = {
   title: "Tone Lab — bookchaowalit",
-  description: "An honest sentiment-analysis interface before the model is connected.",
+  description: "A transparent, lexicon-based sentiment bench that runs in the browser.",
   keywords: ["sentiment analyzer", "bookchaowalit", "language interface"],
   authors: [{ name: "bookchaowalit", url: "https://bookchaowalit.com" }],
   creator: "bookchaowalit",
   metadataBase: new URL("https://bookchaowalit.com"),
-  alternates: { canonical: "https://bookchaowalit.com" },
-  openGraph: { type: "website", locale: "en_US", url: "https://bookchaowalit.com", title: "Tone Lab — bookchaowalit", description: "An honest sentiment-analysis interface before the model is connected.", siteName: "Tone Lab", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Tone Lab" }] },
-  twitter: { card: "summary_large_image", title: "Tone Lab — bookchaowalit", description: "An honest sentiment-analysis interface before the model is connected.", images: ["/og-image.png"], creator: "@bookchaowalit" },
+  openGraph: { type: "website", locale: "en_US", title: "Tone Lab — bookchaowalit", description: "A transparent, lexicon-based sentiment bench that runs in the browser.", siteName: "Tone Lab" },
+  twitter: { card: "summary", title: "Tone Lab — bookchaowalit", description: "A transparent, lexicon-based sentiment bench that runs in the browser.", creator: "@bookchaowalit" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
