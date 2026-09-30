@@ -63,3 +63,23 @@ describe("contrast clauses", () => {
     expect(analyze("very bad").contributions).toEqual([{ word: "bad", value: -3, note: "very ×1.5" }]);
   });
 });
+
+describe("edge cases", () => {
+  it("does not read Object.prototype names as lexicon words (score stayed NaN)", () => {
+    const result = analyze("The constructor was great");
+    expect(result.score).toBe(2);
+    expect(result.label).toBe("positive");
+    expect(analyze("constructor").label).toBe("neutral");
+    expect(analyze("constructor good").score).toBe(2);
+  });
+
+  it("treats modifier-letter and left-quote apostrophes like ' in negators", () => {
+    expect(analyze("I donʼt like it").score).toBe(-1);
+    expect(analyze("I don‘t like it").score).toBe(-1);
+  });
+
+  it("folds full-width letters", () => {
+    expect(tokenize("ｇｏｏｄ")).toEqual(["good"]);
+    expect(analyze("ｇｏｏｄ").label).toBe("positive");
+  });
+});

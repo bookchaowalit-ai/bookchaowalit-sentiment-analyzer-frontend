@@ -26,8 +26,17 @@ export type Contribution = { word: string; value: number; note?: string };
 export type Label = "positive" | "negative" | "neutral" | "empty";
 export type Analysis = { label: Label; score: number; comparative: number; tokens: number; contributions: Contribution[] };
 
+/** Own-property lookup: "constructor" must not resolve to Object.prototype.constructor. */
+function weightOf(table: Record<string, number>, word: string): number | undefined {
+  return Object.hasOwn(table, word) ? table[word] : undefined;
+}
+
+/**
+ * NFKC folds full-width letters ("ｇｏｏｄ"); every apostrophe-like mark
+ * (’ ‘ ʼ ′ ') is dropped so "donʼt" stays the negator "dont".
+ */
 export function tokenize(text: string): string[] {
-  return text.toLowerCase().replace(/[’']/g, "").split(/[^a-z0-9]+/).filter(Boolean);
+  return text.normalize("NFKC").toLowerCase().replace(/['‘’ʼ′`]/g, "").split(/[^a-z0-9]+/).filter(Boolean);
 }
 
 export const NEUTRAL_BAND = 0.05;
@@ -40,14 +49,15 @@ export function analyze(text: string): Analysis {
   let pivot = -1;
   words.forEach((word, index) => { if (CONTRASTS.has(word)) pivot = index; });
   words.forEach((word, index) => {
-    const base = LEXICON[word];
+    const base = weightOf(LEXICON, word);
     if (base === undefined) return;
     let value = base;
     const notes: string[] = [];
     const previous = words[index - 1];
-    if (previous && INTENSIFIERS[previous]) {
-      value *= INTENSIFIERS[previous];
-      notes.push(`${previous} ×${INTENSIFIERS[previous]}`);
+    const boost = previous ? weightOf(INTENSIFIERS, previous) : undefined;
+    if (previous && boost !== undefined) {
+      value *= boost;
+      notes.push(`${previous} ×${boost}`);
     }
     // A negator does not reach across the contrast word ("not bad, but slow").
     const windowStart = Math.max(0, index - 3, pivot >= 0 && pivot < index ? pivot + 1 : 0);

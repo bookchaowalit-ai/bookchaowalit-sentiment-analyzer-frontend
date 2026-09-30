@@ -24,3 +24,13 @@ Score: 6/10 (was 3/10) — the bench now produces a real, explainable reading in
 
 - Canonical host is config-driven: `lib/site.ts` resolves `NEXT_PUBLIC_SITE_URL` (validated, clear error on a non-http(s) value) and feeds `metadataBase`, generated `app/sitemap.ts` / `app/robots.ts` and the MCP `get_app_info` URL; removed the stale template `public/sitemap.xml` / `robots.txt` (they pointed at `bookchaowalit.com` and a `*.vercel.app` name that differs from the project URL). Tested in `lib/site.test.ts`.
 - Contrast clauses: with "but"/"however"/"yet"/"although"/"though", words before the last contrast word count ×0.5 and after it ×1.5, negators no longer reach across it, and each contribution shows the weight in its note. Tested in `lib/sentiment.test.ts`.
+
+## Done in this pass (pass 3)
+- Edge-case pass on `lib/sentiment.ts` (regression tests in `lib/sentiment.test.ts`):
+  - Real bug: `LEXICON[word]` / `INTENSIFIERS[word]` were plain-object lookups,
+    so any text containing "constructor" hit `Object.prototype.constructor`
+    and the score became `NaN` (e.g. "The constructor was great" read neutral).
+    Lookups are now own-property only.
+  - "donʼt" (U+02BC) and "don‘t" were split into "don" + "t", losing the
+    negation; all apostrophe-like marks are now removed before tokenizing.
+  - Full-width letters ("ｇｏｏｄ") are NFKC-folded instead of dropped.
