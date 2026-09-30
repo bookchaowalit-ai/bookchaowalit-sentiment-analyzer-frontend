@@ -1,11 +1,12 @@
 import { handleRpc } from "@/lib/mcp";
+import { SITE_URL } from "@/lib/site";
 
 export const runtime = "edge";
 
 const APP = {
   name: "Sentiment Analyzer",
   description: "A transparent lexicon-based sentiment bench that runs in the browser.",
-  url: "https://bookchaowalit-sentiment-analyzer-frontend.vercel.app",
+  url: SITE_URL,
 };
 
 export async function POST(request: Request) {

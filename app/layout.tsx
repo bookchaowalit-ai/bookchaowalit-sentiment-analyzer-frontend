@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import { DM_Mono, Libre_Baskerville, Manrope } from "next/font/google";
 import "./globals.css";
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   keywords: ["sentiment analyzer", "bookchaowalit", "language interface"],
   authors: [{ name: "bookchaowalit", url: "https://bookchaowalit.com" }],
   creator: "bookchaowalit",
-  metadataBase: new URL("https://bookchaowalit.com"),
+  metadataBase: new URL(SITE_URL),
   openGraph: { type: "website", locale: "en_US", title: "Tone Lab — bookchaowalit", description: "A transparent, lexicon-based sentiment bench that runs in the browser.", siteName: "Tone Lab" },
   twitter: { card: "summary", title: "Tone Lab — bookchaowalit", description: "A transparent, lexicon-based sentiment bench that runs in the browser.", creator: "@bookchaowalit" },
 };

@@ -19,3 +19,7 @@ Score: 6/10 (was 3/10) — the bench now produces a real, explainable reading in
 - New `lib/sentiment.ts` (tested): lexicon scorer with negation scope and intensifiers, comparative score, per-word contributions.
 - Result panel shows label, score, matched words and reasons; editing clears stale results; copy, `DESIGN.md` and README describe it as a heuristic.
 - Metadata: removed canonical pointing at the portfolio root and the missing `/og-image.png`.
+
+## Done in this pass (pass 2)
+
+- Canonical host is config-driven: `lib/site.ts` resolves `NEXT_PUBLIC_SITE_URL` (validated, clear error on a non-http(s) value) and feeds `metadataBase`, generated `app/sitemap.ts` / `app/robots.ts` and the MCP `get_app_info` URL; removed the stale template `public/sitemap.xml` / `robots.txt` (they pointed at `bookchaowalit.com` and a `*.vercel.app` name that differs from the project URL). Tested in `lib/site.test.ts`.
