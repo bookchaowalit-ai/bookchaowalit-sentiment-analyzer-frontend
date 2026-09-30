@@ -37,3 +37,29 @@ describe("negation scope", () => {
     expect(analyze("I want a great client").contributions).toEqual([{ word: "great", value: 2 }]);
   });
 });
+
+describe("contrast clauses", () => {
+  it("weights the clause after the last contrast word more", () => {
+    const result = analyze("The app is good but slow");
+    expect(result.contributions).toEqual([
+      { word: "good", value: 1, note: "before “but” ×0.5" },
+      { word: "slow", value: -1.5, note: "after “but” ×1.5" },
+    ]);
+    expect(result.score).toBe(-0.5);
+  });
+
+  it("flips the overall reading when the praise comes last", () => {
+    expect(analyze("Setup was confusing, however support was great").score).toBe(2);
+  });
+
+  it("does not let a negator reach across the contrast word", () => {
+    expect(analyze("not bad but slow").contributions).toEqual([
+      { word: "bad", value: 1, note: "negated, before “but” ×0.5" },
+      { word: "slow", value: -1.5, note: "after “but” ×1.5" },
+    ]);
+  });
+
+  it("leaves sentences without a contrast word unchanged", () => {
+    expect(analyze("very bad").contributions).toEqual([{ word: "bad", value: -3, note: "very ×1.5" }]);
+  });
+});

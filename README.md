@@ -8,7 +8,9 @@ contributing word and its weight.
 
 `lib/sentiment.ts` scores text with a small hand-weighted lexicon (-3..+3),
 flips words preceded by a negator (within 3 tokens), and scales words preceded
-by an intensifier. The label comes from the length-normalised score.
+by an intensifier. After a contrast word ("but", "however", …) the later
+clause counts ×1.5 and the earlier one ×0.5. The label comes from the
+length-normalised score.
 
 ## Honesty
 

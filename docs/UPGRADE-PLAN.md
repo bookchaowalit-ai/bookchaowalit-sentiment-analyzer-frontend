@@ -7,7 +7,7 @@ Score: 6/10 (was 3/10) — the bench now produces a real, explainable reading in
 ## Backlog
 
 - P1: Grow the lexicon (e.g. an AFINN-style list with licence noted) and add emoji/emoticon handling.
-- P1: Sentence-level breakdown and "but" clause weighting.
+- P1: Sentence-level breakdown (contrast weighting is done; it applies to the whole sample, not per sentence).
 - P2: Optional Thai lexicon (the owner's primary language).
 - P2: Add an OG image.
 
@@ -23,3 +23,4 @@ Score: 6/10 (was 3/10) — the bench now produces a real, explainable reading in
 ## Done in this pass (pass 2)
 
 - Canonical host is config-driven: `lib/site.ts` resolves `NEXT_PUBLIC_SITE_URL` (validated, clear error on a non-http(s) value) and feeds `metadataBase`, generated `app/sitemap.ts` / `app/robots.ts` and the MCP `get_app_info` URL; removed the stale template `public/sitemap.xml` / `robots.txt` (they pointed at `bookchaowalit.com` and a `*.vercel.app` name that differs from the project URL). Tested in `lib/site.test.ts`.
+- Contrast clauses: with "but"/"however"/"yet"/"although"/"though", words before the last contrast word count ×0.5 and after it ×1.5, negators no longer reach across it, and each contribution shows the weight in its note. Tested in `lib/sentiment.test.ts`.
