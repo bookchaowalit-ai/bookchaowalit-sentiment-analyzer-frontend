@@ -42,3 +42,7 @@ a:focus-visible, button:focus-visible, textarea:focus-visible { outline: 2px sol
   .tone-workbench { display: block; }.sample-bench, .result-bench { padding: 26px 20px; }.sample-bench label { margin-top: 44px; }.sample-controls { align-items: flex-start; flex-direction: column; }.sample-controls button { width: 100%; }.result-state { margin-top: 52px; }.tone-footer { align-items: flex-start; flex-direction: column; padding: 24px 0; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
+.contribution-list { margin: 18px 0 0; padding: 0; list-style: none; }
+.contribution-list li { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-top: 1px solid var(--tone-rule); color: var(--tone-paper); font: 11px/1.3 var(--font-dm-mono), monospace; }
+.contribution-list small { color: var(--tone-muted); }
+.contribution-list b { color: var(--tone-amber); font-weight: 500; }
